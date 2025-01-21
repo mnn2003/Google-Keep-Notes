@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Image, List as ListIcon, Check } from 'lucide-react';
+import { X, Image, List as ListIcon, Check, FilePlus } from 'lucide-react';
 import { useNotes } from '../context/NotesContext';
 import { Note, NoteType, NoteColor } from '../types';
 
@@ -21,10 +21,21 @@ export const NoteEditor: React.FC = () => {
   const [content, setContent] = useState('');
   const [type, setType] = useState<NoteType>('text');
   const [color, setColor] = useState<NoteColor>('default');
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+      setType('image'); // Automatically set type to 'image' when an image is uploaded
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!content.trim()) return;
+    if (!content.trim() && !image) return;
 
     const newNote: Note = {
       id: Date.now().toString(),
@@ -37,6 +48,7 @@ export const NoteEditor: React.FC = () => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       labels: [],
+      imageUrl: imagePreview || null, // Save the image preview URL in the note
     };
 
     dispatch({ type: 'ADD_NOTE', payload: newNote });
@@ -44,6 +56,8 @@ export const NoteEditor: React.FC = () => {
     setContent('');
     setType('text');
     setColor('default');
+    setImage(null);
+    setImagePreview(null);
     setIsExpanded(false);
   };
 
@@ -72,6 +86,15 @@ export const NoteEditor: React.FC = () => {
           rows={isExpanded ? 3 : 1}
           className="w-full px-4 py-3 bg-transparent border-none resize-none focus:outline-none"
         />
+        {imagePreview && (
+          <div className="px-4 py-2">
+            <img
+              src={imagePreview}
+              alt="Uploaded Preview"
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        )}
         {isExpanded && (
           <div className="flex flex-wrap items-center justify-between px-2 py-2 border-t border-gray-200 gap-y-2">
             <div className="flex flex-wrap items-center space-x-2 gap-y-2">
@@ -93,15 +116,19 @@ export const NoteEditor: React.FC = () => {
               >
                 <ListIcon className="h-5 w-5 text-gray-500" />
               </button>
-              <button
-                type="button"
-                onClick={() => setType('image')}
-                className={`p-2 rounded-full hover:bg-gray-100 ${
-                  type === 'image' ? 'bg-gray-100' : ''
-                }`}
+              <label
+                htmlFor="image-upload"
+                className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
               >
-                <Image className="h-5 w-5 text-gray-500" />
-              </button>
+                <FilePlus className="h-5 w-5 text-gray-500" />
+                <input
+                  type="file"
+                  id="image-upload"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </label>
               <div className="flex flex-wrap items-center gap-1">
                 {colorOptions.map((option) => (
                   <button
@@ -124,6 +151,8 @@ export const NoteEditor: React.FC = () => {
                   setIsExpanded(false);
                   setTitle('');
                   setContent('');
+                  setImage(null);
+                  setImagePreview(null);
                 }}
                 className="px-4 py-1 text-sm text-gray-500 hover:bg-gray-100 rounded"
               >
