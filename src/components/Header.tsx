@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
             </button>
             <button
               onClick={() => dispatch({ type: 'TOGGLE_VIEW_TYPE' })}
-              className="p-2 rounded-full hover:bg-gray-100 hidden md:block"
+              className="p-2 rounded-full hover:bg-gray-100"
               title={state.viewType === 'grid' ? 'Show as list' : 'Show as grid'}
             >
               {state.viewType === 'grid' ? (
