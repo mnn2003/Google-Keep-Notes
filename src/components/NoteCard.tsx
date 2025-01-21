@@ -138,51 +138,41 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onDragStart, onDragEnd
           </>
         )}
       </div>
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button
-          onClick={handlePin}
-          className={`p-1 rounded-full hover:bg-gray-200 ${
-            note.isPinned ? 'text-blue-500' : 'text-gray-500'
-          }`}
-        >
-          <Pin className="h-4 w-4" />
-        </button>
-      </div>
-      <div className="flex flex-wrap items-center justify-end gap-2 p-2 border-t border-gray-200">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2 border-t border-gray-200">
         {note.type === 'image' && <Image className="h-4 w-4 text-gray-400" />}
         {note.type === 'list' && <ListIcon className="h-4 w-4 text-gray-400" />}
         {isEditing ? (
-          <>
+          <div className="flex flex-wrap gap-2 w-full">
             <button
               onClick={handleSaveEdit}
-              className="p-1 rounded-full hover:bg-gray-200 text-green-500"
+              className="p-2 rounded-full hover:bg-gray-200 text-green-500"
             >
               <Check className="h-4 w-4" />
             </button>
             <button
               onClick={handleCancelEdit}
-              className="p-1 rounded-full hover:bg-gray-200 text-red-500"
+              className="p-2 rounded-full hover:bg-gray-200 text-red-500"
             >
               <X className="h-4 w-4" />
             </button>
-          </>
+          </div>
         ) : (
           <>
             <button
               onClick={handleEdit}
-              className="p-1 rounded-full hover:bg-gray-200 text-gray-500"
+              className="p-2 rounded-full hover:bg-gray-200 text-gray-500"
             >
               <Edit2 className="h-4 w-4" />
             </button>
             <button
               onClick={handleArchive}
-              className="p-1 rounded-full hover:bg-gray-200 text-gray-500"
+              className="p-2 rounded-full hover:bg-gray-200 text-gray-500"
             >
               <Archive className="h-4 w-4" />
             </button>
             <button
               onClick={handleDelete}
-              className="p-1 rounded-full hover:bg-gray-200 text-gray-500"
+              className="p-2 rounded-full hover:bg-gray-200 text-gray-500"
             >
               <Trash2 className="h-4 w-4" />
             </button>
