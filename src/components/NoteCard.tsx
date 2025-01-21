@@ -148,7 +148,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onDragStart, onDragEnd
           <Pin className="h-4 w-4" />
         </button>
       </div>
-      <div className="flex items-center justify-end space-x-1 p-2 border-t border-gray-200">
+      <div className="flex flex-wrap items-center justify-end gap-2 p-2 border-t border-gray-200">
         {note.type === 'image' && <Image className="h-4 w-4 text-gray-400" />}
         {note.type === 'list' && <ListIcon className="h-4 w-4 text-gray-400" />}
         {isEditing ? (
