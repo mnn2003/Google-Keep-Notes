@@ -84,6 +84,15 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onDragStart, onDragEnd
       <div className="p-4">
         {isEditing ? (
           <div className="space-y-2">
+            {note.type === 'image' && note.imageUrl && (
+              <div className="mb-2">
+                <img
+                  src={note.imageUrl}
+                  alt="Uploaded"
+                  className="w-full h-48 object-cover rounded"
+                />
+              </div>
+            )}
             <input
               type="text"
               value={editedTitle}
@@ -108,17 +117,14 @@ export const NoteCard: React.FC<NoteCardProps> = ({ note, onDragStart, onDragEnd
               {note.type === 'image' && note.imageUrl && (
                 <img
                   src={note.imageUrl}
-                  alt=""
+                  alt="Uploaded"
                   className="w-full h-48 object-cover rounded mb-2"
                 />
               )}
               {note.type === 'list' && note.listItems ? (
                 <ul className="space-y-1">
                   {note.listItems.map((item) => (
-                    <li
-                      key={item.id}
-                      className="flex items-center space-x-2"
-                    >
+                    <li key={item.id} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         checked={item.completed}
