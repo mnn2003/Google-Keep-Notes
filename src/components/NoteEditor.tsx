@@ -67,14 +67,14 @@ export const NoteEditor: React.FC = () => {
         <textarea
           placeholder="Take a note..."
           value={content}
-          onChange={(e) => setContent(e.target.value)}
           onClick={() => setIsExpanded(true)}
+          onChange={(e) => setContent(e.target.value)}
           rows={isExpanded ? 3 : 1}
           className="w-full px-4 py-3 bg-transparent border-none resize-none focus:outline-none"
         />
         {isExpanded && (
-          <div className="flex items-center justify-between px-2 py-2 border-t border-gray-200">
-            <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center justify-between px-2 py-2 border-t border-gray-200 gap-y-2">
+            <div className="flex flex-wrap items-center space-x-2 gap-y-2">
               <button
                 type="button"
                 onClick={() => setType('text')}
@@ -102,7 +102,7 @@ export const NoteEditor: React.FC = () => {
               >
                 <Image className="h-5 w-5 text-gray-500" />
               </button>
-              <div className="flex items-center space-x-1">
+              <div className="flex flex-wrap items-center gap-1">
                 {colorOptions.map((option) => (
                   <button
                     key={option.color}
@@ -117,7 +117,7 @@ export const NoteEditor: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-wrap items-center space-x-2 gap-y-2">
               <button
                 type="button"
                 onClick={() => {
